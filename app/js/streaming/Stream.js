@@ -31,6 +31,8 @@ MediaPlayer.dependencies.Stream = function () {
         errored = false,
         kid = null,
         initData = [],
+        //startSeek = null,
+        //endSeek = null,
 
         loadedListener,
         playListener,
@@ -500,6 +502,7 @@ MediaPlayer.dependencies.Stream = function () {
 
         onPause = function () {
             this.debug.log("Got pause event.");
+            this.metricsModel.addPlayerEvent('pause');
 
             if (!this.scheduleWhilePaused) {
                 stopBuffering.call(this);
@@ -546,6 +549,8 @@ MediaPlayer.dependencies.Stream = function () {
             this.debug.log("Got seeking event.");
             var time = this.videoModel.getCurrentTime();
 
+            //startSeek = time;
+
             if (videoController) {
                 videoController.seek(time);
             }
@@ -556,6 +561,17 @@ MediaPlayer.dependencies.Stream = function () {
 
         onSeeked = function () {
             this.debug.log("Seek complete.");
+
+            //endSeek = this.videoModel.getCurrentTime();
+            //if (startSeek != null && endSeek != null) {
+            //    var eventType = 'fastForward';
+            //    if (endSeek < startSeek) {
+            //        eventType = 'rewind';
+            //    }
+            //    this.metricsModel.addPlayerEvent(eventType);
+            //}
+            //startSeek = null;
+            //endSeek = null;
 
             this.videoModel.listen("seeking", seekingListener);
             this.videoModel.unlisten("seeked", seekedListener);
@@ -740,6 +756,7 @@ MediaPlayer.dependencies.Stream = function () {
         capabilities: undefined,
         debug: undefined,
         metricsExt: undefined,
+        metricsModel: undefined,
         errHandler: undefined,
         timelineConverter: undefined,
         requestScheduler: undefined,

@@ -237,6 +237,24 @@ Dash.dependencies.DashMetricsExtensions = function () {
             currentDroppedFrames = droppedFrames[droppedFramesLastIndex];
 
             return currentDroppedFrames;
+        },
+        getPlayerEventMetrics = function (metrics) {
+            if (metrics === null) { return null; }
+
+            var events = metrics.PlayerEvent;
+            if (events === undefined) { return null; }
+
+            var pauseCount, ffCount, rwdCount;
+            pauseCount = events.pause == undefined ? 0 : events.pause.length;
+            //ffCount = events.fastForward == undefined ? 0 : events.fastForward.length;
+            //rwdCount = events.rewind == undefined ? 0 : events.rewind.length;
+
+            return {
+                playerEvents: events,
+                pauseCount: pauseCount
+                //ffCount: ffCount,
+                //rwdCount: rwdCount
+            };
         };
 
     return {
@@ -248,7 +266,8 @@ Dash.dependencies.DashMetricsExtensions = function () {
         getCurrentRepresentationSwitch : getCurrentRepresentationSwitch,
         getCurrentBufferLevel : getCurrentBufferLevel,
         getCurrentHttpRequest : getCurrentHttpRequest,
-        getCurrentDroppedFrames : getCurrentDroppedFrames
+        getCurrentDroppedFrames : getCurrentDroppedFrames,
+        getPlayerEventMetrics : getPlayerEventMetrics
     };
 };
 

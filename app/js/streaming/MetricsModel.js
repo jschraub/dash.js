@@ -136,6 +136,16 @@ MediaPlayer.models.MetricsModel = function () {
 
             playList.trace.push(vo);
             return vo;
+        },
+
+        addPlayerEvent: function (eventType) {
+            var vo = new MediaPlayer.vo.metrics.PlayerEvent(eventType);
+            var playerMetrics = this.getMetricsFor('player');
+            if (playerMetrics.PlayerEvent[eventType] === undefined) {
+                playerMetrics.PlayerEvent[eventType] = [];
+            }
+            playerMetrics.PlayerEvent[eventType].push(vo);
+            return vo;
         }
     };
 };

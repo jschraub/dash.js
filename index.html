@@ -93,6 +93,7 @@
     <script src="app/js/streaming/vo/metrics/RepresentationSwitch.js"></script>
     <script src="app/js/streaming/vo/metrics/TCPConnection.js"></script>
     <script src="app/js/streaming/vo/metrics/DroppedFrames.js"></script>
+    <script src="app/js/streaming/vo/metrics/PlayerEvent.js"></script>
 
     <!-- Dash -->
     <script src="app/js/dash/Dash.js"></script>
@@ -213,6 +214,9 @@
                         <p class="text-warning">{{videoBitrate}} kbps</p>
                         <p class="text-primary">Rep Index: <span class="text-success">{{videoIndex}}</span><span class="text-warning">{{videoPendingIndex}}</span>/<span class="text-success">{{videoMaxIndex}}</span></p>
                         <p class="text-primary">Buffer Length: <span class="text-success">{{videoBufferLength}}</span></p>
+                        <p class="text-primary">Pause Count: <span class="text-success">{{pauseCount}}</span></p>
+                        <!-- <p class="text-primary">Fast Forward Count: <span class="text-success">{{ffCount}}</span></p>
+                        <p class="text-primary">Rewind Count: <span class="text-success">{{rwdCount}}</span></p> -->
                     </div>
                 </div>
                 <div class="panel">
