@@ -31,8 +31,6 @@ MediaPlayer.dependencies.Stream = function () {
         errored = false,
         kid = null,
         initData = [],
-        //startSeek = null,
-        //endSeek = null,
 
         loadedListener,
         playListener,
@@ -74,6 +72,16 @@ MediaPlayer.dependencies.Stream = function () {
             }
 
             this.debug.log("Do seek: " + time);
+
+            var prevTime = this.videoModel.getCurrentTime();
+
+            if (prevTime != null && time != null) {
+                var eventType = 'fastForward';
+                if (time < prevTime) {
+                    eventType = 'rewind';
+                }
+                this.metricsModel.addPlayerEvent(eventType);
+            }
 
             this.system.notify("setCurrentTime");
             this.videoModel.setCurrentTime(time);
@@ -549,29 +557,18 @@ MediaPlayer.dependencies.Stream = function () {
             this.debug.log("Got seeking event.");
             var time = this.videoModel.getCurrentTime();
 
-            //startSeek = time;
+            seek(time);
 
-            if (videoController) {
-                videoController.seek(time);
-            }
-            if (audioController) {
-                audioController.seek(time);
-            }
+            //if (videoController) {
+            //    videoController.seek(time);
+            //}
+            //if (audioController) {
+            //    audioController.seek(time);
+            //}
         },
 
         onSeeked = function () {
             this.debug.log("Seek complete.");
-
-            //endSeek = this.videoModel.getCurrentTime();
-            //if (startSeek != null && endSeek != null) {
-            //    var eventType = 'fastForward';
-            //    if (endSeek < startSeek) {
-            //        eventType = 'rewind';
-            //    }
-            //    this.metricsModel.addPlayerEvent(eventType);
-            //}
-            //startSeek = null;
-            //endSeek = null;
 
             this.videoModel.listen("seeking", seekingListener);
             this.videoModel.unlisten("seeked", seekedListener);
