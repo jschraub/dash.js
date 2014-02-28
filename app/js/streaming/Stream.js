@@ -548,6 +548,8 @@ MediaPlayer.dependencies.Stream = function () {
         onPause = function () {
             this.debug.log("Got pause event.");
 
+            this.metricsModel.addPlayerEvent('pause');
+
             if (videoController) {
                 videoController.stop();
             }
@@ -756,6 +758,7 @@ MediaPlayer.dependencies.Stream = function () {
         capabilities: undefined,
         debug: undefined,
         metricsExt: undefined,
+        metricsModel: undefined,
         errHandler: undefined,
 
         setup: function () {

@@ -89,6 +89,7 @@
     <script src="app/js/streaming/vo/metrics/RepresentationSwitch.js"></script>
     <script src="app/js/streaming/vo/metrics/TCPConnection.js"></script>
     <script src="app/js/streaming/vo/metrics/DroppedFrames.js"></script>
+    <script src="app/js/streaming/vo/metrics/PlayerEvent.js"></script>
 
     <!-- Dash -->
     <script src="app/js/dash/Dash.js"></script>
@@ -228,6 +229,7 @@
                         <p class="text-warning">{{audioBitrate}} kbps</p>
                         <p class="text-primary">Rep Index: <span class="text-success">{{audioIndex}}</span><span class="text-warning">{{audioPendingIndex}}</span>/<span class="text-success">{{audioMaxIndex}}</span></p>
                         <p class="text-primary">Buffer Length: <span class="text-success">{{audioBufferLength}}</span></p>
+                        <p class="text-primary">Pauses: <span class="text-success">{{pauseCount}}</span></p>
                     </div>
                 </div>
             </div>

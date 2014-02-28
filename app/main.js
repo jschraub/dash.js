@@ -113,6 +113,7 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
     $scope.videoMaxIndex = 0;
     $scope.videoBufferLength = 0;
     $scope.videoDroppedFrames = 0;
+    $scope.pauseCount = 0;
 
     $scope.audioBitrate = 0;
     $scope.audioIndex = 0;
@@ -142,6 +143,7 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
             bufferLevel,
             httpRequest,
             droppedFramesMetrics,
+            playerEventMetrics,
             bitrateIndexValue,
             bandwidthValue,
             pendingValue,
@@ -150,13 +152,15 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
             point,
             lastFragmentDuration,
             lastFragmentDownloadTime,
-            droppedFramesValue = 0;
+            droppedFramesValue = 0,
+            pauseCount = 0;
 
         if (metrics && metricsExt) {
             repSwitch = metricsExt.getCurrentRepresentationSwitch(metrics);
             bufferLevel = metricsExt.getCurrentBufferLevel(metrics);
             httpRequest = metricsExt.getCurrentHttpRequest(metrics);
             droppedFramesMetrics = metricsExt.getCurrentDroppedFrames(metrics);
+            playerEventMetrics = metricsExt.getPlayerEventMetrics(metrics);
 
             if (repSwitch !== null) {
                 bitrateIndexValue = metricsExt.getIndexForRepresentation(repSwitch.to);
@@ -184,6 +188,10 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
                 droppedFramesValue = droppedFramesMetrics.droppedFrames;
             }
 
+            if (playerEventMetrics !== null) {
+                pauseCount = playerEventMetrics.pauseCount;
+            }
+
             if (isNaN(bandwidthValue) || bandwidthValue === undefined) {
                 bandwidthValue = 0;
             }
@@ -208,7 +216,8 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
                 pendingIndex: (pendingValue !== bitrateIndexValue) ? "(-> " + (pendingValue + 1) + ")" : "",
                 numBitratesValue: numBitratesValue,
                 bufferLengthValue: bufferLengthValue,
-                droppedFramesValue: droppedFramesValue
+                droppedFramesValue: droppedFramesValue,
+                pauseCount: pauseCount
             }
         }
         else {
@@ -253,6 +262,11 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
             if (audioSeries.length > maxGraphPoints) {
                 audioSeries.splice(0, 1);
             }
+        }
+
+        metrics = getCribbedMetricsFor("player");
+        if (metrics) {
+            $scope.pauseCount = metrics.pauseCount;
         }
 
         $scope.invalidateDisplay(true);
