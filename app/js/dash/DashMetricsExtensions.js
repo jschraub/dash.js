@@ -246,14 +246,14 @@ Dash.dependencies.DashMetricsExtensions = function () {
 
             var pauseCount, ffCount, rwdCount;
             pauseCount = events.pause == undefined ? 0 : events.pause.length;
-            //ffCount = events.fastForward == undefined ? 0 : events.fastForward.length;
-            //rwdCount = events.rewind == undefined ? 0 : events.rewind.length;
+            ffCount = events.fastForward == undefined ? 0 : events.fastForward.length;
+            rwdCount = events.rewind == undefined ? 0 : events.rewind.length;
 
             return {
                 playerEvents: events,
-                pauseCount: pauseCount
-                //ffCount: ffCount,
-                //rwdCount: rwdCount
+                pauseCount: pauseCount,
+                ffCount: ffCount,
+                rwdCount: rwdCount
             };
         };
 

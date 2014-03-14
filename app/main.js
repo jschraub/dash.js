@@ -153,7 +153,9 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
             lastFragmentDuration,
             lastFragmentDownloadTime,
             droppedFramesValue = 0,
-            pauseCount = 0;
+            pauseCount = 0,
+            ffCount = 0,
+            rwdCount = 0;
 
         if (metrics && metricsExt) {
             repSwitch = metricsExt.getCurrentRepresentationSwitch(metrics);
@@ -217,7 +219,9 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
                 numBitratesValue: numBitratesValue,
                 bufferLengthValue: bufferLengthValue,
                 droppedFramesValue: droppedFramesValue,
-                pauseCount: pauseCount
+                pauseCount: pauseCount,
+                ffCount: ffCount,
+                rwdCount: rwdCount
             }
         }
         else {
@@ -267,6 +271,8 @@ app.controller('DashController', function($scope, Sources, Notes, Contributors, 
         metrics = getCribbedMetricsFor("player");
         if (metrics) {
             $scope.pauseCount = metrics.pauseCount;
+            $scope.ffCount = metrics.ffCount;
+            $scope.rwdCount = metrics.rwdCount;
         }
 
         $scope.invalidateDisplay(true);
